@@ -1,326 +1,87 @@
-# ReWear - Sustainable Fashion Exchange Platform
+<p align="center">
+  <img src="app/static/WhatsApp%20Image%202025-07-12%20at%204.32.38%20PM.jpeg" alt="ReWear logo" width="88" height="88" />
+</p>
 
-![ReWear Logo](https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500&auto=format&fit=crop&q=60)
+<h1 align="center">ReWear</h1>
 
-## 🌍 About ReWear
+<p align="center">
+  A clothing swap site for items you no longer wear.<br />
+  Offer one of yours for another member's item, or spend points to take it home.
+</p>
 
-**ReWear** is a sustainable fashion exchange platform that allows users to swap their unused clothing items through two innovative methods:
+<p align="center">
+  <a href="#getting-started">Getting started</a>
+  ·
+  <a href="#how-swaps-work">How swaps work</a>
+  ·
+  <a href="#configuration">Configuration</a>
+  ·
+  <a href="https://github.com/Anuraj-dev/ReWear/issues">Issues</a>
+</p>
 
-- **Direct Item Swaps**: Exchange your items directly with other users
-- **Point-Based Redemption System**: Earn and spend points to acquire desired items
+ReWear is a clothing swap site. Members list clothes they no longer wear, and an admin approves each listing before other members can see it. You can then offer one of your own items for a direct swap, or spend points on an item and offer nothing back.
 
-Our platform promotes environmental sustainability by giving fashion a second life and building a trusted community of eco-conscious users.
+It is a Flask app that runs on your own machine. It stores data in SQLite and renders pages with Jinja2 and Bootstrap 5. You don't need API keys or third-party accounts. Bootstrap and Font Awesome load from a CDN, so pages need internet access to look right.
 
-## ✨ Key Features
+## What you get
 
-### 🔐 User Authentication & Management
+- **Two ways to get an item.** A direct swap offers one of your approved listings in return. A point redemption spends the item's point value and needs nothing from you in return.
+- **Points that move with each trade.** Every account starts with 100 points. When a direct swap is accepted, both members get 10 points. When a point redemption is accepted, the points move from the requester to the owner.
+- **Approval before anything goes live.** New listings stay hidden until an admin approves them. Rejecting a listing deletes it and cancels its pending swap requests.
+- **Structured listings.** Each listing has a category of Men, Women or Kids, and a type of Shirt, Pants, Dress or Others. Sizes run from S to XL, conditions from New to Acceptable. You add comma-separated tags and set the point value yourself. Search matches titles and descriptions, and filters by category, type, size and point range.
+- **Images by link.** A listing takes an image URL. There is no upload, so host your photos elsewhere and paste the link.
+- **Server-side checks.** Passwords are stored as Werkzeug hashes, and session cookies are signed with `SECRET_KEY`. Admin pages refuse any session without the admin flag.
+- **A profile with your numbers.** Your profile shows total listings, approved listings, completed swaps and your current points.
 
-- Secure user registration and login system
-- Profile management with user statistics
-- Admin panel for platform management
-- Role-based access control
+## Getting started
 
-### 👕 Listing Management
+You need Python 3.9 or newer. Run these commands from the project root.
 
-- Create detailed clothing listings with images
-- Categorize items (Men, Women, Kids)
-- Specify item types (Shirt, Pants, Dress, Others)
-- Size selection (S, M, L, XL)
-- Condition tracking (New, Like New, Good, Acceptable)
-- Tag system for better searchability
-- Admin approval workflow
-
-### 🔄 Swap System
-
-- **Direct Swaps**: Exchange your item for another user's item
-- **Point Redemption**: Use earned points to acquire items without offering your own
-- Swap request management (Accept, Reject, Cancel)
-- Real-time swap status tracking
-- Points earning system for successful swaps
-
-### 💰 Points System
-
-- Users start with 100 points
-- Earn points by completing successful swaps
-- Spend points to redeem items without direct exchange
-- Track points balance in user profile
-
-### 🛡️ Admin Features
-
-- Dashboard with platform statistics
-- User management (view, activate, deactivate)
-- Listing approval/rejection system
-- Swap request monitoring
-- Content moderation tools
-
-### 📱 Modern UI/UX
-
-- Responsive design for all devices
-- Bootstrap-powered interface
-- Interactive image galleries
-- Real-time notifications
-- Smooth animations and transitions
-
-## 🛠️ Technology Stack
-
-### Backend
-
-- **Framework**: Flask (Python)
-- **Database**: SQLite with SQLAlchemy ORM
-- **Authentication**: Session-based with Werkzeug security
-- **Migrations**: Flask-Migrate with Alembic
-
-### Frontend
-
-- **Template Engine**: Jinja2
-- **CSS Framework**: Bootstrap 5
-- **Icons**: Font Awesome & Bootstrap Icons
-- **JavaScript**: Vanilla JS for interactivity
-
-### Database Schema
-
-- **Users**: User accounts, points, admin roles
-- **Listings**: Clothing items with detailed metadata
-- **Swap Requests**: Exchange proposals and status tracking
-
-## 🚀 Installation & Setup
-
-### Prerequisites
-
-- Python 3.8+
-- pip (Python package manager)
-
-### 1. Clone the Repository
-
-```bash
+```sh
 git clone https://github.com/Anuraj-dev/ReWear.git
 cd ReWear
-```
-
-### 2. Create Virtual Environment
-
-```bash
 python -m venv venv
-```
-
-### 3. Activate Virtual Environment
-
-```bash
-# Windows
-venv\Scripts\activate
-
-# macOS/Linux
 source venv/bin/activate
-```
-
-### 4. Install Dependencies
-
-```bash
 pip install -r requirements.txt
 ```
 
-### 5. Initialize Database
+On Windows, activate the environment with `venv\Scripts\activate`.
 
-```bash
+Next, create the database. Git ignores the `migrations/` folder, so `flask db init` creates it on your machine.
+
+```sh
 flask db init
 flask db migrate -m "Initial migration"
 flask db upgrade
-```
-
-### 6. (Optional) Populate Sample Data
-
-```bash
-python sampledata.py
-```
-
-### 7. Run the Application
-
-```bash
 python run.py
 ```
 
-The application will be available at `http://localhost:5000`
+Open http://localhost:5000 to see the site. `run.py` starts Flask in debug mode, so keep it to local use. The SQLite database lives at `instance/site.db`. Create your own account at `/auth/register`.
 
-## 📋 Usage Guide
+### Load sample data
 
-### For Regular Users
-
-1. **Registration**: Create an account with email and username
-2. **Profile Setup**: Complete your profile with personal information
-3. **List Items**: Add your unused clothing items with photos and descriptions
-4. **Browse Listings**: Explore available items from other users
-5. **Make Swap Requests**:
-   - Offer your item for direct swap
-   - Use points for redemption without offering items
-6. **Manage Swaps**: Accept, reject, or cancel swap requests
-7. **Track Points**: Monitor your points balance and transaction history
-
-### For Administrators
-
-1. **Admin Dashboard**: Access comprehensive platform statistics
-2. **User Management**: View and manage user accounts
-3. **Content Moderation**: Approve or reject listing submissions
-4. **Swap Monitoring**: Oversee swap requests and transactions
-5. **Platform Analytics**: Track growth metrics and user engagement
-
-## 🗄️ Database Models
-
-### User Model
-
-```python
-- user_id (UUID, Primary Key)
-- username (String, Unique)
-- email (String, Unique)
-- password (Hashed String)
-- points (Integer, Default: 100)
-- is_admin (Boolean, Default: False)
-- created_at (DateTime)
+```sh
+python sampledata.py
 ```
 
-### Listing Model
+The script deletes all existing users, listings and swaps first. Then it creates six members who all use the password `password123`, such as `alice@example.com`. It also creates an admin at `admin@rewear.com` with the password `admin123`. Sign in as the admin to reach the admin pages and approve listings.
 
-```python
-- id (UUID, Primary Key)
-- uploader_id (Foreign Key to User)
-- title (String)
-- description (Text)
-- category (String: Men/Women/Kids)
-- type (String: Shirt/Pants/Dress/Others)
-- size (String: S/M/L/XL)
-- condition (String: New/Like New/Good/Acceptable)
-- tags (Text, Comma-separated)
-- image_url (String)
-- point_value (Integer, Default: 100)
-- is_approved (Boolean, Default: False)
-- is_available (Boolean, Default: True)
-- status (String: Available/Swapped/Redeemed)
-- created_at (DateTime)
-```
+## How swaps work
 
-### SwapRequest Model
+Every swap request has one of two types and moves through four states: Pending, Accepted, Rejected and Cancelled. Only a Pending request can change state. The requester can cancel it, and the item's owner can accept or reject it.
 
-```python
-- id (UUID, Primary Key)
-- requester_id (Foreign Key to User)
-- requested_item_id (Foreign Key to Listing)
-- offered_item_id (Foreign Key to Listing, Nullable)
-- status (String: Pending/Accepted/Rejected/Cancelled)
-- swap_type (String: direct_swap/point_redemption)
-- points_used (Integer, Default: 0)
-- created_at (DateTime)
-- updated_at (DateTime)
-```
+- A direct swap offers one of your approved, available listings. When the owner accepts, both listings are marked Swapped and each member gets 10 points.
+- A point redemption needs your balance to cover the item's point value when you send the request. When the owner accepts, the points move from you to the owner and the item is marked Redeemed.
+- A listing page can also redeem an item straight away, with no request and no owner step. The points move and the item is marked Redeemed.
 
-## 🌐 API Endpoints
+## Configuration
 
-### Authentication Routes (`/auth`)
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `SECRET_KEY` | A development key in `app/__init__.py` | Signs session cookies. Set a long random value before you run the app anywhere other people can reach. |
 
-- `GET /register` - User registration page
-- `POST /register` - Process registration
-- `GET /login` - User login page
-- `POST /login` - Process login
-- `POST /logout` - User logout
+`SECRET_KEY` is the only setting read from the environment. The database path is fixed in `app/__init__.py`.
 
-### User Routes (`/user`)
+## Contributing
 
-- `GET /profile` - User profile page
-- `GET /my-listings` - User's listings with filters
-- `GET /my-swaps` - User's swap history
-- `GET /swap-requests` - Incoming swap requests
-- `POST /api/swaps/<id>/accept` - Accept swap request
-- `POST /api/swaps/<id>/reject` - Reject swap request
-- `POST /api/swaps/<id>/cancel` - Cancel swap request
-
-### Listing Routes (`/listings`)
-
-- `GET /` - Browse all approved listings
-- `GET /new` - Create new listing form
-- `POST /` - Submit new listing
-- `GET /<id>` - View listing details
-- `GET /<id>/edit` - Edit listing form
-- `POST /<id>` - Update listing
-- `GET /<id>/swap` - Swap request form
-- `POST /<id>/swap` - Submit swap request
-- `POST /<id>/redeem` - Redeem with points
-
-### Admin Routes (`/admin`)
-
-- `GET /` - Admin dashboard
-- `GET /users` - Manage users
-- `GET /listings` - Manage listings
-- `GET /swaps` - Manage swap requests
-- `POST /listings/<id>/approve` - Approve listing
-- `POST /listings/<id>/reject` - Reject listing
-
-## 🔒 Security Features
-
-- **Password Hashing**: Werkzeug security for password encryption
-- **Session Management**: Secure session handling
-- **Input Validation**: Server-side validation for all forms
-- **SQL Injection Protection**: SQLAlchemy ORM prevents SQL injection
-- **XSS Protection**: Jinja2 template auto-escaping
-- **CSRF Protection**: Configurable secret key for session security
-
-## 📱 Responsive Design
-
-The application is fully responsive and optimized for:
-
-- 📱 Mobile devices (320px+)
-- 📱 Tablets (768px+)
-- 💻 Desktop computers (1024px+)
-- 🖥️ Large screens (1200px+)
-
-## 🎨 Color Scheme & Branding
-
-- **Primary Colors**: Green (#01715C) for sustainability theme
-- **Secondary Colors**: Purple gradients for modern appeal
-- **Typography**: Clean, modern fonts for readability
-- **Icons**: Comprehensive icon system for intuitive navigation
-
-## 🧪 Sample Data
-
-The application includes a sample data generator (`sampledata.py`) that creates:
-
-- 6 sample users with varying point balances
-- 1 admin account (admin@rewear.com / admin123)
-- Multiple clothing listings across different categories
-- Sample swap requests demonstrating the system
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Support
-
-For support and questions:
-
-- 📧 Email: support@rewear.com
-- 🐛 Issues: [GitHub Issues](https://github.com/Anuraj-dev/ReWear/issues)
-- 📖 Documentation: This README file
-
-## 🚀 Future Enhancements
-
-- [ ] Real-time messaging between users
-- [ ] Mobile app development
-- [ ] AI-powered outfit recommendations
-- [ ] Integration with shipping services
-- [ ] Advanced search and filtering
-- [ ] User rating and review system
-- [ ] Social media integration
-- [ ] Multi-language support
-- [ ] Payment gateway integration
-- [ ] Machine learning for personalized recommendations
-
----
-
-**ReWear** - _Where Fashion Gets a Second Life_ 🌱
-
-Made with ❤️ for a sustainable future.
+Fork the repository, create a branch for your change, and open a pull request against `main` on [GitHub](https://github.com/Anuraj-dev/ReWear).
