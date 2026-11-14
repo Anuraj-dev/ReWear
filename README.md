@@ -85,3 +85,7 @@ Every swap request has one of two types and moves through four states: Pending, 
 ## Contributing
 
 Fork the repository, create a branch for your change, and open a pull request against `main` on [GitHub](https://github.com/Anuraj-dev/ReWear).
+
+## License
+
+MIT. See [LICENSE](LICENSE).
